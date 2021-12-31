@@ -88,3 +88,4 @@ export const getProducts = async (options?: Partial<GetProductsOptions>) => {
         gallery   : item.gallery.map((gal) => getImageUrl(gal).width(imageWidth).height(imageHeight).url())
     }));
 }
+
