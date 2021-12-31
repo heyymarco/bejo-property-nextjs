@@ -1,0 +1,28 @@
+{
+  "name": "bejo-property-nextjs",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@nodestrap/carousel": "^4.0.3",
+    "@nodestrap/dimensions": "^4.0.1",
+    "@nodestrap/icon": "^4.0.8",
+    "@nodestrap/navbar": "^4.0.8",
+    "@sanity/client": "^2.23.2",
+    "@sanity/image-url": "^1.0.1",
+    "next": "12.0.7",
+    "react": "17.0.2",
+    "react-dom": "17.0.2"
+  },
+  "devDependencies": {
+    "@types/node": "17.0.5",
+    "@types/react": "17.0.38",
+    "eslint": "8.5.0",
+    "eslint-config-next": "12.0.7",
+    "typescript": "4.5.4"
+  }
+}
