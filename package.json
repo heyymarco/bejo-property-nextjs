@@ -8,8 +8,8 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@nodestrap/carousel": "^4.0.3",
-    "@nodestrap/dimensions": "^4.0.1",
+    "@nodestrap/carousel": "^4.0.4",
+    "@nodestrap/dimensions": "^4.0.2",
     "@nodestrap/icon": "^4.0.8",
     "@nodestrap/navbar": "^4.0.8",
     "@sanity/client": "^2.23.2",
@@ -21,7 +21,7 @@
   "devDependencies": {
     "@types/node": "17.0.5",
     "@types/react": "17.0.38",
-    "eslint": "8.5.0",
+    "eslint": "8.6.0",
     "eslint-config-next": "12.0.7",
     "typescript": "4.5.4"
   }

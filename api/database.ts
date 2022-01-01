@@ -59,20 +59,36 @@ export interface GetProductsOptions {
 
     imageWidth   : number
     imageHeight  : number
+
+    newest       : boolean
+    maxCount     : number|null
+    page         : number|null
 }
 export const getProducts = async (options?: Partial<GetProductsOptions>) => {
     const absOptions : GetProductsOptions = {
         ...{
             mainCategory: '',
-            imageWidth: 400,
-            imageHeight: 500,
+
+            imageWidth  : 400,
+            imageHeight : 500,
+
+            newest      : false,
+            
+            maxCount    : null,
+            paging      : null,
         },
         ...options
     };
     const {
         mainCategory,
+
         imageWidth,
         imageHeight,
+
+        newest,
+
+        maxCount,
+        page,
     } = absOptions;
 
     const data = await database.fetch<{
@@ -80,7 +96,7 @@ export const getProducts = async (options?: Partial<GetProductsOptions>) => {
         title     : string
         mainImage : SanityImageSource
         gallery   : SanityImageSource[]
-    }[]>(`*[(_type == 'product') ${mainCategory ? ` && ('${mainCategory.toLowerCase()}' in categories[]->{'title': lower(title)}.title)` : ''}] { 'slug': slug.current, title, mainImage, gallery }`);
+    }[]>(`*[(_type == 'product') ${mainCategory ? ` && ('${mainCategory.toLowerCase()}' in categories[]->{'title': lower(title)}.title)` : ''}] ${newest ? ' | order(_createdAt desc)' : ''} ${maxCount ? ` [${(page ?? 0) * maxCount}...${maxCount}]` : '' } { 'slug': slug.current, title, mainImage, gallery }`);
 
     return data.map((item) =>({
         ...item,

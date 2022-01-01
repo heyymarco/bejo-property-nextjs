@@ -1,19 +1,17 @@
-import type { GetServerSideProps, NextPage } from 'next'
 import Head from 'next/head'
-import Image from 'next/image'
 
-import { createSheet, globalDef, rules, rule, atRoot, fontFace, layout, vars, compositionOf, children, variants, descendants } from '@cssfn/cssfn'
+import { rule, layout, compositionOf, children, variants, descendants } from '@cssfn/cssfn'
 import { createUseSheet } from '@cssfn/react-cssfn'
 
 import gens from '@nodestrap/typos'
 import { colors } from '@nodestrap/colors'
 import { spacers } from '@nodestrap/spacers'
-import { isScreenWidthSmallerThan, isScreenWidthAtLeast } from '@nodestrap/breakpoints'
+import { isScreenWidthSmallerThan } from '@nodestrap/breakpoints'
 import { Icon } from '@nodestrap/icon'
 import { Carousel } from '@nodestrap/carousel'
 
 import { siteVars } from '../website.config'
-import { GenericSection, Section } from '../components/Section'
+import { GenericSection } from '../components/Section'
 import { getProducts } from '../api/database'
 import type { ReturnPromisePropsType } from '../api/types'
 
@@ -169,7 +167,7 @@ const useSheet = createUseSheet(() => {
 
                 ...descendants('.thumb', [
                     layout({
-                        width: '300px',
+                        width: '400px',
                         // height: '300px',
                         aspectRatio: 1.33,
                         flex: [[0, 1, 'auto']],
@@ -184,8 +182,8 @@ const useSheet = createUseSheet(() => {
 
 export const getServerSideProps = async (context: any) => {
     const [rumahs, tanahs] = await Promise.all([
-        getProducts({ mainCategory: 'rumah', imageWidth: 400, imageHeight: 300 }),
-        getProducts({ mainCategory: 'tanah', imageWidth: 400, imageHeight: 300 })
+        getProducts({ mainCategory: 'rumah', imageWidth: 400, imageHeight: 300, newest: true, maxCount: 12 }),
+        getProducts({ mainCategory: 'tanah', imageWidth: 400, imageHeight: 300, newest: true, maxCount: 12 })
     ]);
 
     return {
