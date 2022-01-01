@@ -75,7 +75,7 @@ export const getProducts = async (options?: Partial<GetProductsOptions>) => {
             newest      : false,
             
             maxCount    : null,
-            paging      : null,
+            page        : null,
         },
         ...options
     };
