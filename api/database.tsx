@@ -111,7 +111,7 @@ export const getProducts = async (options?: Partial<GetProductsOptions>) => {
     const result = data.map((item) =>({
         ...item,
         mainImage : getImageUrl(item.mainImage).width(imageWidth).height(imageHeight).url(),
-        gallery   : item.gallery.map((gal) => getImageUrl(gal).width(imageWidth).height(imageHeight).url())
+        gallery   : (item.gallery ?? []).map((gal) => getImageUrl(gal).width(imageWidth).height(imageHeight).url())
     }));
 
     return {
