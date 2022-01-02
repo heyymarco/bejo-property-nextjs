@@ -14,6 +14,10 @@ import { siteVars } from '../website.config'
 import { GenericSection } from '../components/Section'
 import { getProducts } from '../api/database'
 import type { ReturnPromisePropsType } from '../api/types'
+// @ts-ignore
+import * as blockContent from '@sanity/block-content-to-react'
+// console.log('blockContent = ', typeof(blockContent))
+const BlockContent = blockContent;
 
 
 
@@ -230,10 +234,11 @@ const Page = (props: ReturnPromisePropsType<typeof getServerSideProps>) => {
         <GenericSection>
             <article>
                 <h2>Info Rumah</h2>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Est nemo nihil voluptas in mollitia atque iste debitis aspernatur officiis adipisci beatae quae voluptatibus ut reprehenderit, ex temporibus quisquam blanditiis ea?</p>
+                <BlockContent test='suck' blocks={rumahs.content} />
+                <p></p>
                 <div className={sheet.gallery}>
                     {
-                        rumahs.map((rumah, index: number) => (
+                        rumahs.items.map((rumah, index: number) => (
                             <Carousel key={index} classes={['thumb']} theme='primary' infiniteLoop={true}>
                                 {
                                     [rumah.mainImage, ...rumah.gallery].map((imageUrl, index) => (
@@ -249,10 +254,11 @@ const Page = (props: ReturnPromisePropsType<typeof getServerSideProps>) => {
         <GenericSection theme='secondary' mild={true}>
             <article>
                 <h2>Info Tanah</h2>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Est nemo nihil voluptas in mollitia atque iste debitis aspernatur officiis adipisci beatae quae voluptatibus ut reprehenderit, ex temporibus quisquam blanditiis ea?</p>
+                <BlockContent test='suck' blocks={tanahs.content} />
+                <p></p>
                 <div className={sheet.gallery}>
                     {
-                        tanahs.map((tanah, index: number) => (
+                        tanahs.items.map((tanah, index: number) => (
                             <Carousel key={index} classes={['thumb']} theme='primary' infiniteLoop={true}>
                                 {
                                     [tanah.mainImage, ...tanah.gallery].map((imageUrl, index) => (

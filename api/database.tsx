@@ -2,6 +2,10 @@ import { SanityClient, default as sanityClient } from '@sanity/client'
 import imageUrlBuilder  from '@sanity/image-url'
 import type { ImageUrlBuilder } from '@sanity/image-url/lib/types/builder';
 import type { SanityImageSource } from '@sanity/image-url/lib/types/types';
+// @ts-ignore
+import * as blockContent from '@sanity/block-content-to-react'
+// console.log('blockContent = ', typeof(blockContent))
+const BlockContent = blockContent;
 
 
 
@@ -19,7 +23,7 @@ const createNewDbConnection = (): SanityClient => sanityClient({
     dataset    : process.env.SANITY_DATASET,
     apiVersion : '2021-03-25', // use current UTC date - see "specifying API version"!
     token      : process.env.SANITY_TOKEN, // or leave blank for unauthenticated usage
-    useCdn     : true, // `false` if you want to ensure fresh data
+    // useCdn     : true, // `false` if you want to ensure fresh data
 });
 
 if (isInServer) {
@@ -98,10 +102,31 @@ export const getProducts = async (options?: Partial<GetProductsOptions>) => {
         gallery   : SanityImageSource[]
     }[]>(`*[(_type == 'product') ${mainCategory ? ` && ('${mainCategory.toLowerCase()}' in categories[]->{'title': lower(title)}.title)` : ''}] ${newest ? ' | order(_createdAt desc)' : ''} ${maxCount ? ` [${(page ?? 0) * maxCount}...${maxCount}]` : '' } { 'slug': slug.current, title, mainImage, gallery }`);
 
-    return data.map((item) =>({
+    const catData = await database.fetch<{
+        content : any
+    }>(`*[(_type == 'category') && (lower(title) == '${mainCategory.toLowerCase()}')][0] { content }`);
+    // console.log('catData = ', catData);
+
+
+    const result = data.map((item) =>({
         ...item,
         mainImage : getImageUrl(item.mainImage).width(imageWidth).height(imageHeight).url(),
         gallery   : item.gallery.map((gal) => getImageUrl(gal).width(imageWidth).height(imageHeight).url())
     }));
+
+    return {
+        items   : result,
+
+        content : catData?.content
+    };
 }
+
+
+// const serializers = {
+//     types: {
+//         span: (props: any) => (
+//             <span>{props.node.code}</span>
+//         )
+//     }
+// }
 
