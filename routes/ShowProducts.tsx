@@ -52,7 +52,7 @@ const Page = (props: ShowProductsProps) => {
                 { props.children }
                 <div className={sheet.gallery}>
                     {
-                        products.map((product, index: number) => (
+                        products.items.map((product, index: number) => (
                             <Carousel key={index} classes={['thumb']} theme='primary' infiniteLoop={true}>
                                 {
                                     [product.mainImage, ...product.gallery].map((imageUrl, index) => (
